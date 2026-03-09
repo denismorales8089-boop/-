@@ -2,60 +2,92 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>Pregunta</title>
+<title>Para ti ❤️</title>
 
 <style>
 
 body{
-font-family: Arial;
-background:#111;
+margin:0;
+font-family:Arial;
+background:black;
 color:white;
-height:100vh;
+overflow:hidden;
+text-align:center;
+}
+
+/* pantalla inicio */
+
+#inicio{
 display:flex;
 justify-content:center;
 align-items:center;
-flex-direction:column;
-overflow:hidden;
+height:100vh;
 }
 
-h1{
-margin-bottom:60px;
-}
-
-#si{
-position:absolute;
-right:80px;
-font-size:22px;
-padding:15px 40px;
+#hola{
+font-size:110px;
+padding:40px 90px;
+border:none;
 background:#ff2d55;
-border:none;
-border-radius:10px;
 color:white;
+border-radius:25px;
 cursor:pointer;
 }
 
-#no{
-position:absolute;
-left:80px;
-font-size:30px;
-padding:25px 70px;
-background:#555;
-border:none;
-border-radius:10px;
-color:white;
-cursor:pointer;
+/* contenido */
+
+#contenido{
+display:none;
+height:100vh;
+flex-direction:column;
+justify-content:center;
+align-items:center;
 }
+
+#pregunta{
+font-size:70px;
+margin-bottom:40px;
+}
+
+button{
+font-size:25px;
+padding:15px 40px;
+border:none;
+border-radius:12px;
+cursor:pointer;
+margin:10px;
+}
+
+#mucho{
+background:#ff2d55;
+color:white;
+}
+
+#poquito{
+background:#444;
+color:white;
+position:absolute;
+}
+
+/* corazones */
 
 .corazon{
 position:fixed;
 color:red;
-font-size:25px;
-animation:flotar 3s linear infinite;
+font-size:30px;
+animation:flotar 4s linear infinite;
+}
+
+.teamo{
+position:fixed;
+color:pink;
+font-size:26px;
+animation:flotar 5s linear infinite;
 }
 
 @keyframes flotar{
 0%{transform:translateY(0);opacity:1;}
-100%{transform:translateY(-800px);opacity:0;}
+100%{transform:translateY(-900px);opacity:0;}
 }
 
 </style>
@@ -63,31 +95,123 @@ animation:flotar 3s linear infinite;
 
 <body>
 
-<h1>¿Quieres ir al cine conmigo? 🍿🎬</h1>
+<div id="inicio">
+<button id="hola">HOLAAAAA</button>
+</div>
 
-<button id="no">NO</button>
-<button id="si">SÍ</button>
+<div id="contenido">
+
+<div id="pregunta">¿ME AMAS?</div>
+
+<div>
+<button id="mucho">MUCHO ❤️</button>
+<button id="poquito">POQUITO</button>
+</div>
+
+</div>
 
 <script>
 
-const botonNo = document.getElementById("no");
+/* INICIO */
 
-botonNo.addEventListener("mouseover", mover);
-botonNo.addEventListener("click", mover);
+document.getElementById("hola").onclick=function(){
 
-function mover(){
+document.getElementById("inicio").style.display="none";
+document.getElementById("contenido").style.display="flex";
 
-let x = Math.random() * (window.innerWidth - 200);
-let y = Math.random() * (window.innerHeight - 100);
-
-botonNo.style.left = x + "px";
-botonNo.style.top = y + "px";
+crearCorazones();
+crearTeAmo();
 
 }
 
-document.getElementById("si").onclick = function(){
+/* CORAZONES */
 
-document.body.innerHTML = `
+function crearCorazones(){
+
+setInterval(()=>{
+
+let corazon=document.createElement("div");
+corazon.className="corazon";
+corazon.innerHTML="❤️";
+
+corazon.style.left=Math.random()*100+"vw";
+corazon.style.bottom="0";
+
+document.body.appendChild(corazon);
+
+setTimeout(()=>{corazon.remove()},4000);
+
+},120);
+
+}
+
+/* TEXTO TE AMO */
+
+function crearTeAmo(){
+
+setInterval(()=>{
+
+let texto=document.createElement("div");
+texto.className="teamo";
+texto.innerHTML="TE AMO";
+
+texto.style.left=Math.random()*100+"vw";
+texto.style.bottom="0";
+
+document.body.appendChild(texto);
+
+setTimeout(()=>{texto.remove()},5000);
+
+},250);
+
+}
+
+/* BOTON POQUITO HUYE */
+
+const botonNo=document.getElementById("poquito");
+let tamañoNo=1;
+
+botonNo.addEventListener("mouseover",mover);
+botonNo.addEventListener("click",mover);
+
+function mover(){
+
+let x=Math.random()*(window.innerWidth-200);
+let y=Math.random()*(window.innerHeight-100);
+
+botonNo.style.left=x+"px";
+botonNo.style.top=y+"px";
+
+tamañoNo-=0.05;
+
+botonNo.style.transform="scale("+tamañoNo+")";
+
+}
+
+/* BOTON MUCHO CRECE */
+
+const botonSi=document.getElementById("mucho");
+let tamañoSi=1;
+
+botonSi.onclick=function(){
+
+tamañoSi+=0.3;
+
+botonSi.style.transform="scale("+tamañoSi+")";
+
+if(tamañoSi>3){
+
+pantallaFinal();
+
+}
+
+}
+
+/* FINAL */
+
+function pantallaFinal(){
+
+document.body.innerHTML=`
 <div style="
 display:flex;
 justify-content:center;
@@ -96,35 +220,16 @@ flex-direction:column;
 height:100vh;
 background:black;
 color:white;
-font-size:60px;
+font-size:90px;
 text-align:center;
 ">
-<div>Ya sabía que sí ibas a querer jijiji 😏</div>
+
+<div>SABÍA QUE ME AMABAS ❤️😏</div>
+
 </div>
 `;
 
 crearCorazones();
-
-}
-
-function crearCorazones(){
-
-setInterval(() => {
-
-let corazon = document.createElement("div");
-corazon.className="corazon";
-corazon.innerHTML="❤️";
-
-corazon.style.left = Math.random()*100+"vw";
-corazon.style.bottom="0";
-
-document.body.appendChild(corazon);
-
-setTimeout(()=>{
-corazon.remove();
-},3000);
-
-},200);
 
 }
 
